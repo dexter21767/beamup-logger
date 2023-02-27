@@ -7,7 +7,7 @@ const fallback = require(path.join(__dirname, 'fallback.js'));
 
 const nodeVersion = process.versions.node.split('.')[0] 
 
-const { spawn,exec } = nodeVersion>=16?require('node:child_process'):require('child_process');
+const { spawn } = nodeVersion>=16 ? require('node:child_process') : require('child_process');
 
 let count = 0;
 let time = Date.now(); 
@@ -23,7 +23,7 @@ const respawn = spawned => {
     }
     
     if(((Date.now() - time)/(1000*60)) < 60 && count<10) {
-      respawn(exec(commands[0], [commands[1]]));
+      respawn(spawn(commands[0], [commands[1]]));
       count++;
     }else {
       log.info('spawning fallback server')
@@ -43,4 +43,4 @@ const respawn = spawned => {
   });
 }
 
-if(commands.length >1) respawn(exec(commands[0], [commands[1]]))
+if(commands.length >1) respawn(spawn(commands[0], [commands[1]]))

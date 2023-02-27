@@ -1,7 +1,6 @@
 
 const { program } = require('commander');
 
-
 program
   .name('beamup-logger')
   .description('A beamup subprocess to enable logs')
@@ -13,7 +12,5 @@ program.command('execute')
   .argument('argument <string>', 'argument for launching the server')
 
 program.parse();
-
-//console.log(program.args);
 
 module.exports = [program.args[1],program.args[2]]
