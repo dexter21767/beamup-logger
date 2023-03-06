@@ -1,7 +1,7 @@
 {
   "name": "beamup-logger",
   "version": "0.1.1",
-  "description": "A beamup subprocess to enable logs",
+  "description": "A simple logger for beamup",
   "main": "subprocess.js",
   "scripts": {
     "build": "pkg ."

@@ -1,0 +1,11 @@
+{
+	"name": "beamup-logger-express",
+	"version": "0.1.0",
+	"description": "",
+	"scripts": {
+		"postinstall": "sh ./postinstall.sh",
+		"start": "./beamup-logger execute npm start"
+	},
+	"dependencies": {
+	}
+}
