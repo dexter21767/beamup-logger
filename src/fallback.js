@@ -1,11 +1,12 @@
-function fallback(port) {
-	const express = require("express"),
-		app = express(),
-		cors = require('cors'),
-		path = require('path'),
-		serveIndex = require('serve-index');
-	const dir = path.join(__dirname, '../logs');
+const express = require("express"),
+cors = require('cors'),
+path = require('path'),
+serveIndex = require('serve-index');
+const dir = path.join(process.cwd(),'/logs');
 
+function fallback(port) {
+	const app = express();
+	
 	app.set('trust proxy', true)
 	app.use('/logs', express.static(dir, { etag: false }), serveIndex(dir, { 'icons': true, 'view': 'details ' }))
 	app.use(cors())

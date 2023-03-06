@@ -1,8 +1,8 @@
 {
   "name": "beamup-logger",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A simple logger for beamup",
-  "main": "subprocess.js",
+  "main": "index.js",
   "scripts": {
     "build": "pkg ."
   },
@@ -25,7 +25,6 @@
   "bin": "./index.js",
   "pkg": {
     "scripts": "src/**/*.js",
-    "assets": "./logs/*",
     "targets": [
       "node16-linux-x64",
       "node16-win-x64",

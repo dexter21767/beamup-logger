@@ -72,7 +72,17 @@ Commands:
 
 ## Examples
 
-Additional examples here.
+Serving logs from inside the addon 
+
+```
+const express = require("express"),
+	app = express(),
+	path = require('path'),
+	serveIndex = require('serve-index');
+
+app.use('/logs', express.static(path.join(__dirname, 'logs'),{etag: false}), serveIndex('logs', {'icons': true,'view':'details '}))
+```
+
 
 ## Tests
 
