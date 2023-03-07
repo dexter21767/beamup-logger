@@ -1,6 +1,9 @@
-const {port,commands} = require('./cli.js');
+const {port,maxFiles,commands} = require('./cli.js');
 
-const log = require('./logger.js');
+const logs = require('./logger.js');
+
+let log = new logs(maxFiles)
+
 const fallback = require('./fallback.js');
 
 
@@ -27,6 +30,11 @@ const respawn = spawned => {
       log.info('spawning fallback server')
       fallback(port)
   }
+  })
+
+  spawned.on('error', (error) => {
+    console.log(`child process errored with ${error}`);
+    log.error(`child process errored with ${error}`);  
   })
 
   spawned.stdout.on('data', (data) => {
