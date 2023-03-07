@@ -1,14 +1,24 @@
 const express = require("express"),
-cors = require('cors'),
-path = require('path'),
-serveIndex = require('serve-index');
+	  cors = require('cors'),
+	  path = require('path'),
+	  serveIndex = require('serve-index');
+
 const dir = path.join(process.cwd(),'/logs');
 
 function fallback(port) {
 	const app = express();
 	
 	app.set('trust proxy', true)
-	app.use('/logs', express.static(dir, { etag: false }), serveIndex(dir, { 'icons': true, 'view': 'details ' }))
+	app.use((req, res, next) => {
+		res.set('Cache-Control', 'no-store');
+		next();
+	})
+
+	app.use('/logs',	
+		express.static(dir, { etag: false }),
+		serveIndex(dir, { 'icons': true, 'view': 'details' })
+	)
+
 	app.use(cors())
 
 	app.use('/logs.zip', LogZip);
@@ -23,8 +33,8 @@ function fallback(port) {
 	});
 }
 
-const zip = require('express-zip');
-const fs = require('fs');
+const zip = require('express-zip'),
+	  fs = require('fs');
 
 function LogZip (req, res) {
 	try{

@@ -76,11 +76,22 @@ Serving logs from inside the addon
 
 ```
 const express = require("express"),
-	app = express(),
-	path = require('path'),
-	serveIndex = require('serve-index');
+   	path = require('path'),
+	   serveIndex = require('serve-index');
 
-app.use('/logs', express.static(path.join(__dirname, 'logs'),{etag: false}), serveIndex('logs', {'icons': true,'view':'details '}))
+const app = express();
+
+//optional middleware to disable caching 
+app.use('/logs',(req, res, next) => {
+	res.set('Cache-Control', 'no-store');
+	next();
+})
+
+app.use('/logs', 
+   express.static(path.join(__dirname, 'logs'),{etag: false}), 
+   serveIndex('logs', {'icons': true,'view':'details '})
+)
+
 ```
 
 
