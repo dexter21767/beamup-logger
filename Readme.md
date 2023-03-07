@@ -60,12 +60,13 @@ web: ./beamup-logger -p $PORT execute npm start
 
 ## Options 
 
-Options:
-  -V, --version                                      output the version number
-  -p, --port <int>                                   local server port for fallback server
-  -h, --help                                         display help for command
+  `-m, --maxFiles` - string - Maximum number of logs to keep. If not set, no logs will be removed. This can be a number of files or number of days. If using days, add 'd' as the suffix. It uses auditFile to keep track of the log files in a json format. It won't delete any file not contained in it. It can be a number of files or number of days (default: 1d), set to 0 to disable".
 
-Commands:
+  `-p, --port` - int - local server port for fallback server
+
+
+## Commands:
+
   execute <executable <string>> <argument <string>>  usage "cli execute node server.js"
   help [command]                                     display help for command
 
