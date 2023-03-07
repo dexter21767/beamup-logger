@@ -3,18 +3,17 @@ const express = require("express"),
 	  path = require('path'),
 	  serveIndex = require('serve-index');
 
-const dir = path.join(process.cwd(),'/logs');
+const dir = path.join(process.cwd(), '/logs');
 
-function fallback(port) {
+function LogsServer(port) {
 	const app = express();
-	
-	app.set('trust proxy', true)
+
 	app.use((req, res, next) => {
 		res.set('Cache-Control', 'no-store');
 		next();
 	})
 
-	app.use('/logs',	
+	app.use('/logs',
 		express.static(dir, { etag: false }),
 		serveIndex(dir, { 'icons': true, 'view': 'details' })
 	)
@@ -25,7 +24,7 @@ function fallback(port) {
 
 
 	require('dotenv').config();
-	port = port ? port : process.env.PORT;
+	port = port || process.env.PORT;
 
 	app.listen((port), function () {
 		console.log("fallback server started");
@@ -36,19 +35,21 @@ function fallback(port) {
 const zip = require('express-zip'),
 	  fs = require('fs');
 
-function LogZip (req, res) {
-	try{
-	const fsDir = fs.readdirSync(dir);
-	const files = [];
-	for (var i = 0; i < fsDir.length; i++) {
-		if (fsDir[i].endsWith(".log")) files.push({ path: dir + '/' + fsDir[i], name: fsDir[i] })
-	}
-	res.zip(files, 'logs.zip');
-	}catch(e){
+function LogZip(req, res) {
+	try {
+		const files = fs.readdirSync(dir) || [];
+		const logFiles = [];
+
+		files.forEach(file => {
+			if (file.endsWith(".log")) logFiles.push({ path: path.join(dir,file), name: file })
+		})
+
+		res.zip(logFiles, 'logs.zip');
+
+	} catch (e) {
 		console.error(e);
 	}
 }
 
-//fallback();
 
-module.exports = fallback
+module.exports = LogsServer

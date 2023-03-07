@@ -27,7 +27,8 @@
   "pkg": {
     "scripts": "src/**/*.js",
     "targets": [
-      "node16-linux-x64"
+      "node16-linux-x64",
+      "node12-linux-x64"
     ],
     "outputPath": "dist"
   }

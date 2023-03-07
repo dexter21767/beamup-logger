@@ -3,19 +3,19 @@ require('winston-daily-rotate-file');
 
 const path = require('path');
 
-const dir = path.join(process.cwd(),'/logs');
+const dir = path.join(process.cwd(), '/logs');
 
 const { combine, timestamp, printf } = winston.format;
 
 class logs {
-  constructor(maxFiles){
-    if(!maxFiles){
+  constructor(maxFiles) {
+    if (!maxFiles) {
       this.maxFiles = '1d';
-    } else if(maxFiles == 0){
+    } else if (maxFiles == 0) {
       this.maxFiles = null
-    }else{
+    } else {
       this.maxFiles = maxFiles;
-    } 
+    }
 
     return this.log;
   }
@@ -44,17 +44,17 @@ class logs {
     }),
   ]
 
-  
-  get format (){
+
+  get format() {
     return printf(({ level, message, timestamp }) => {
-  
+
       timestamp = new Date(timestamp).toTimeString().split(' ')[0];
       return `'${timestamp}' ${level}: ${message}`;
     });
   }
-  
-  
-  get log() { 
+
+
+  get log() {
     return winston.createLogger({
       format: combine(
         timestamp(),
@@ -62,7 +62,7 @@ class logs {
       ),
       transports: this.transports
     });
-}
+  }
 
 }
 
@@ -116,4 +116,4 @@ var log = winston.createLogger({
   transports: transports
 });*/
 
-module.exports= logs;
+module.exports = logs;

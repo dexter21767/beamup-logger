@@ -65,6 +65,10 @@ web: ./beamup-logger -p $PORT execute npm start
   `-p, --port` - int - local server port for fallback server
 
 
+### Note:
+
+You can use `--` to indicate the end of the options, and any remaining arguments will be used without being interpreted.
+
 ## Commands:
 
   execute <executable <string>> <argument <string>>  usage "cli execute node server.js"
